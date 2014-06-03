@@ -31,13 +31,3 @@ Both files are created in the script's working directory, i.e. the data set root
 
 A markdown document that describes the content of the two summary data sets in detail and documents the processing performed on the original data sets.
 
-```{r}
-summary(cars)
-```
-
-You can also embed plots, for example:
-
-```{r fig.width=7, fig.height=6}
-plot(cars)
-```
-
