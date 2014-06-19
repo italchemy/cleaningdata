@@ -149,7 +149,7 @@ colNames <- names(fullSet)
 columns <- colNames[lapply(colNames, function(name) { grepl("_(mean|std)(_|$)", name) }) == TRUE]
 message("Creating musigma_features.csv...")
 musigma <- fullSet[ , j=c("subject", "activity", columns), with=FALSE]
-write.csv(musigma, file="musigma_features.csv")
+write.csv(musigma, file="musigma_features.csv", row.names=FALSE)
 cleanup <- c(cleanup, "colNames", "columns", "musigma")
 
 # Create a second data set containing the average of each measure of the
@@ -157,7 +157,7 @@ cleanup <- c(cleanup, "colNames", "columns", "musigma")
 
 message("Creating average_values.csv...")
 averageSet <- musigma[ , j=lapply(.SD, mean, na.rm=TRUE), by=list(subject, activity)]
-write.csv(averageSet, file="average_values.csv")
+write.csv(averageSet, file="average_values.csv", row.names=FALSE)
 cleanup <- c(cleanup, "averageSet")
 
 # 
