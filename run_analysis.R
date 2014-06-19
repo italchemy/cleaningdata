@@ -152,8 +152,9 @@ musigma <- fullSet[ , j=c("subject", "activity", columns), with=FALSE]
 write.csv(musigma, file="musigma_features.csv", row.names=FALSE)
 cleanup <- c(cleanup, "colNames", "columns", "musigma")
 
-# Create a second data set containing the average of each measure of the
-# extracted set for each activity for each subject
+# Create a second data set containing the average of each measure of the 
+# extracted set for each activity for each subject. This is a tidy data set as
+# per Hadley in that it is in Boyce's 3rd normal form.
 
 message("Creating average_values.csv...")
 averageSet <- musigma[ , j=lapply(.SD, mean, na.rm=TRUE), by=list(subject, activity)]
