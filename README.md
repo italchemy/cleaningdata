@@ -21,7 +21,15 @@ An R script for processing the UCI HAR data. The script is designed to be run in
 
 1. **musigma_features.csv** - a data set comprised of the subject, activity, and mean and standard deviation features from the UCI testing and training datasets. See the accompanying code book, or the UCI data set file "features_info.txt" for more information on the variables and their meaning.
 
-2. **average_values.csv** - a data set comprised of the average (mean) value for all of the UCI features, grouped by subject and activity. Again, see the accompanying code book and/or the UCI documentation for more information on the variables and their meaning within this data set.
+2. **average_values.csv** - a data set comprised of the average (mean) value for all of the UCI features, grouped by subject and activity. Again, see the accompanying code book and/or the UCI documentation for more information on the variables and their meaning within this data set. 
+
+*average_values.csv* is a tidy dataset that meets Hadley's criteria for tidy data; namely:
+
+* each variable forms a column (and each column represents only one variable);
+* each observation forms a row; and
+* each type of observational unit forms a table.
+
+Put another way, the dataset is in Boyce's 3rd normal form for data; which Hadley states is equivalent to his statistically-framed principles.  
 
 **WARNING**
 
