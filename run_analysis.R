@@ -66,23 +66,16 @@ mergeDataSet <- function (directory = character()) {
     stop(paste("Feature file \"", featureFile, "\", not found", sep=""))    
   }
   
-  # Create a single table version of the training data. I'd prefer to use
-  # fread() to read all data but there is an known issue in my version of
-  # data.table (1.9.2) with reading space-delimited data. Although it's way slow
-  # we'll use read.table() instead of using an even slower sed script with fread() to replace
-  # the spaces with commas.
+  # Create a single table version of the data. I'd prefer to use fread() to read
+  # all data but there is an known issue in my version of data.table (1.9.2)
+  # with reading space-delimited data. Although it's way slow we'll use
+  # read.table() instead of using an even slower sed script with fread() to
+  # replace the spaces with commas.
   
   subject <- fread(subjectFile)
   activities <- read.table(activityFile)
-  
-  activity <- matrix(nrow = nrow(activities))
-  
-  for (i in 1:nrow(activities)) {
-    activity[[i,1]] <- activityLabels[activities[[i,1]]]$V2
-  }
-
   features <- read.table(featureFile)
-  dataset <- cbind(subject, activity, features)
+  dataset <- cbind(subject, activities, features)
   setnames(dataset, c("subject", "activity", featureLabels[[2]]))
   
   return(dataset)
