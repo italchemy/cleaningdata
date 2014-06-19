@@ -157,7 +157,7 @@ cleanup <- c(cleanup, "colNames", "columns", "musigma")
 
 message("Creating average_values.csv...")
 averageSet <- musigma[ , j=lapply(.SD, mean, na.rm=TRUE), by=list(subject, activity)]
-write.csv(averageSet, file="average_values.csv", row.names=FALSE)
+write.csv(averageSet, file="average_values.txt", row.names=FALSE)
 cleanup <- c(cleanup, "averageSet")
 
 # 
