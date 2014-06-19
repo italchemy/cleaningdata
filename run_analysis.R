@@ -131,20 +131,32 @@ fullSet <- rbind(trainingSet, testSet)
 setkey(fullSet)
 cleanup <- c(cleanup, "trainingSet", "testSet", "fullSet")
 
-# Extract only those features ending in mean() and std()
+# Pull out the columns names and remove parentheses because (i) they bug me in 
+# variable names, and (ii) they are not usable when referenced in R using the $ 
+# notation, i.e. data$somevariable()_X doesn't work. Do the same with hyphens,
+# and commas replacing them with underscores.
+
+setnames(fullSet, as.character(lapply(names(fullSet), function(name) { 
+  gsub("_$", "",
+    gsub("(\\(|\\))", "_",
+      gsub("(-|,)", "_", 
+        gsub("\\(\\)", "", name)))) 
+  })))
+
+# Extract only those features containing _mean_, or _std_, or ending in _mean, or _std
 
 colNames <- names(fullSet)
-columns <- colNames[lapply(colNames, function(name) { grepl("mean()", name, fixed=TRUE) || grepl("std()", name, fixed=TRUE) }) == TRUE]
+columns <- colNames[lapply(colNames, function(name) { grepl("_(mean|std)(_|$)", name) }) == TRUE]
 message("Creating musigma_features.csv...")
 musigma <- fullSet[ , j=c("subject", "activity", columns), with=FALSE]
 write.csv(musigma, file="musigma_features.csv")
 cleanup <- c(cleanup, "colNames", "columns", "musigma")
 
-# Create a second data set containing the average of each feature for each
-# activity for each subject
+# Create a second data set containing the average of each measure of the
+# extracted set for each activity for each subject
 
 message("Creating average_values.csv...")
-averageSet <- fullSet[ , j=lapply(.SD, mean, na.rm=TRUE), by=list(subject, activity)]
+averageSet <- musigma[ , j=lapply(.SD, mean, na.rm=TRUE), by=list(subject, activity)]
 write.csv(averageSet, file="average_values.csv")
 cleanup <- c(cleanup, "averageSet")
 

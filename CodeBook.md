@@ -86,16 +86,18 @@ The data set was created by:
 
 2. Merging the two data tables to create a single data table comprised of all of the subject, activity, and feature records for the study (the original data set is partitioned such that approximately 70% is in the training data set, and 30% comprises the test data set).
 
-3. Selecting only those variables with "mean()" or "std()" in their name
+3. Modifying the HCI labels to make the usable as R indices. Specifically:
+..1. Remove empty parentheses, e.g. suffixes like mean() become simply mean.
+..2. Replace commas with underscores, e.g. fBodyGyro_bandsEnergy_49,64 becomes fBodyGyro_bandsEnergy_49_64.
+..3. Replace parentheses around labels with underscores, e.g angle(Z,gravityMean) becomes angle_Z_gravityMean.
 
-4. Writing the resulting data set to the output file.
+4. Selecting only those variables with "mean" or "std" as standalone words, i.e. those with _mean_ or _std_, or ending in _mean or _std.
 
-## Average Values By Subject Per Activity (average_values.csv)
+5. Writing the resulting data set to the output file.
 
-The average values by subject per activity data set (captured in the output file *average_values.csv*) contains the average value of each measure in the original study for each subject per activity. The data set includes the average value per subject per activity for each of the measures listed in the Background section, as well as the following two columns:
+## Average Values By Subject Per Selected Activity (average_values.csv)
 
-- **subject** - the subject identifier of the participant that generated the measurement vector; and
-- **activity** - a text string that describes the activity performed during the vector measurement period
+The average values by subject per activity data set (captured in the output file *average_values.csv*) contains the average value of each measure within the means and standard deviations file per subject per activity. The included variables are the same as those of the *musigma_features.csv* file.
 
 The data set was created by:
 
@@ -103,6 +105,11 @@ The data set was created by:
 
 2. Merging the two data tables to create a single data table comprised of all of the subject, activity, and feature records for the study (the original data set is partitioned such that approximately 70% is in the training data set, and 30% comprises the test data set).
 
-3. Computing the average value of the measures for each subject and activity.
+3. Modifying the HCI labels to make the usable as R indices. Specifically:
+..1. Remove empty parentheses, e.g. suffixes like mean() become simply mean.
+..2. Replace commas with underscores, e.g. fBodyGyro_bandsEnergy_49,64 becomes fBodyGyro_bandsEnergy_49_64.
+..3. Replace parentheses around labels with underscores, e.g angle(Z,gravityMean) becomes angle_Z_gravityMean.
 
-4. Writing the resulting data set to the output file.
+4. Computing the average value of the measures for each subject and activity.
+
+5. Writing the resulting data set to the output file.
